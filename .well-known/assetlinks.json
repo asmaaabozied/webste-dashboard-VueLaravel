@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.gmtcc.inmaa",
+    "sha256_cert_fingerprints":
+    ["83:18:23:A4:63:8C:8E:75:A1:9F:B4:A2:D0:04:F0:E4:97:5C:33:34:5C:BC:BB:F1:15:80:92:D5:24:3F:0F:DD"]
+  }
+}]

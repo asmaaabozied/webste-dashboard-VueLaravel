@@ -1,0 +1,32 @@
+├─ src/
+|  ├─ core/ // stateless
+|  |  ├─ cards
+|  |  ├─ inputs
+|  |  ├─ tab
+│  ├─ modules/
+│  │  ├─ SWAM/
+|  |  |  ├─ core/
+|  |  |  |   ├─ StructureComparison/ // statefull
+|  |  |  |   |  ├─ index.vue
+|  |  |  |   |  ├─ stroe.js
+|  |  |  |   |
+|  |  |  |   ├─ DeviceComparison/ // statefull
+|  |  |  |   |  ├─ index.vue
+|  |  |  |   |  ├─ stroe.js
+│  │  │  ├─  components/ // stateless
+|  |  |  |   ├─ sensor-icon.uve
+|  |  |  |   ├─ solution-icon.uve
+│  │  │  ├─  Pages/
+|  |  |  |   ├─ analysis
+|  |  |  |   |  ├─ components
+|  |  |  |   |  |  ├─ component.vue
+|  |  |  |   |  ├─ index.vue
+|  |  |  |   |  ├─ store.js
+|  |  |  |   ├─ device
+|  |  |  |   |  ├─ index.vue
+|  |  |  |   |  ├─ store.js
+│  │  │  ├─  routers/
+│  │  │  |   ├─ router.js
+│  │  │  ├─  services/
+│  │  │  |   ├─ service.js
+│  │  │  ├─  Test/

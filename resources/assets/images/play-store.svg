@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1837" height="749" viewBox="0 0 1837 749">
+  <defs>
+    <filter id="Rectangle_1604" x="0" y="0" width="1837" height="749" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="30" result="blur"/>
+      <feFlood flood-opacity="0.322"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_60" data-name="Group 60" transform="translate(-4327 -151)">
+    <g transform="matrix(1, 0, 0, 1, 4327, 151)" filter="url(#Rectangle_1604)">
+      <g id="Rectangle_1604-2" data-name="Rectangle 1604" transform="translate(90 87)" fill="#fff" stroke="#707070" stroke-width="4">
+        <rect width="1657" height="569" rx="88" stroke="none"/>
+        <rect x="2" y="2" width="1653" height="565" rx="86" fill="none"/>
+      </g>
+    </g>
+    <path id="Icon_awesome-android" data-name="Icon awesome-android" d="M38.092,109.63v72.058A17.051,17.051,0,0,1,20.98,198.925c-9.521,0-18.73-7.716-18.73-17.237V109.63c0-9.4,9.21-17.112,18.73-17.112A17.183,17.183,0,0,1,38.092,109.63Zm6.72,97.7a18.377,18.377,0,0,0,18.419,18.419H75.615l.187,38.02c0,22.962,34.349,22.775,34.349,0v-38.02H133.3v38.02c0,22.837,34.536,22.9,34.536,0v-38.02H180.4A18.351,18.351,0,0,0,198.7,207.325V95.691H44.813V207.325ZM199.135,89.655H44.128c0-26.633,15.93-49.781,39.576-61.853L71.819,5.836C70.077,2.787,74.495.858,75.988,3.471L88.06,25.624a84.072,84.072,0,0,1,67.391,0l12.01-22.09c1.556-2.676,5.912-.684,4.169,2.365L159.745,27.8c23.459,12.072,39.389,35.22,39.389,61.853ZM92.914,55.119a6.533,6.533,0,0,0-6.534-6.534,6.537,6.537,0,0,0,0,13.068A6.533,6.533,0,0,0,92.914,55.119Zm70.565,0a6.441,6.441,0,1,0-6.347,6.534A6.5,6.5,0,0,0,163.479,55.119Zm58.991,37.4a17.063,17.063,0,0,0-17.112,17.112v72.058a17.169,17.169,0,0,0,17.112,17.237c9.583,0,18.73-7.716,18.73-17.237V109.63C241.2,100.047,231.99,92.518,222.47,92.518Z" transform="translate(4598.771 380.755)"/>
+    <text id="Google_Play" data-name="Google Play" transform="translate(5040 645)" font-size="131" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="0" y="0">Google Play</tspan></text>
+    <text id="GET_IT_ON" data-name="GET IT ON" transform="translate(5046 488)" fill="#707070" font-size="92" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="0" y="0">GET IT ON</tspan></text>
+  </g>
+</svg>

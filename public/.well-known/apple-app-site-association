@@ -1,0 +1,11 @@
+{
+	"applinks": {
+		"apps": [],
+		"details": [{
+			"appID": "KRYZN7TH5C.com.almotakamel.NewAnmaa",
+			"paths": [
+				".well-known/apple-app-site-association/*"
+			]
+		}]
+	}
+}

@@ -1,0 +1,13 @@
+laravel new name-project 
+
+composer require laravel/ui
+
+npm cache clean --force
+
+npm config set registry http://registry.npmjs.org
+
+php artisan ui vue 
+
+npm install 
+
+npm run dev
