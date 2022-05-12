@@ -55,7 +55,12 @@
                         [-1, 2, 3, 4, 5, 6]
                       )
                     "
-                    @click="cancelOrder(item.type, item[item.type].id)"
+                    @click="cancelOrder(
+                        item.type,
+                        item[item.type] && item[item.type].id
+                          ? item[item.type].id
+                          : null
+                      )"
                   >
                     <v-list-item-title
                       >{{ $t("general.cancel") }}
