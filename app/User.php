@@ -24,6 +24,8 @@ class User extends Authenticatable implements Auditable
         'fcm_token',
         'is_verified',
         'lang'
+        ,'role_id','employee_id',
+        'type'
     ];
 
     protected $appends = ['type' , 'phone'];

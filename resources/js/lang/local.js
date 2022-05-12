@@ -159,6 +159,15 @@ export default ({
             orderType: 'Order type',
         },
         auth: {
+            users:'Users',
+            myorders:'MyOrders',
+            name:'Name',
+            type:'Type',
+            status:'Status',
+            active:'Active',
+            Noactive:'NoActive',
+            employees:'Employees',
+            roles:'Roles',
             paymentError: "there is an error in payment process",
             title: 'Welcome',
             titleSub: 'Create new account to join us',
@@ -189,7 +198,7 @@ export default ({
             newPassword: 'New password',
             approvedAgent: 'Approved account as agent',
             accountType: 'Account type',
-            agentAccount: 'Agent account',
+            agentAccount: 'Employee account',
             customerAccount: 'Customer account',
             successLogout: 'Successfully logout',
             error401: 'Error 401',
@@ -253,6 +262,8 @@ export default ({
             close: 'Close',
             delete: 'Delete',
             deleteMsg: 'Are you sure to delete this item?',
+            statusMsg: 'Are you sure to chanage status this item?',
+
             sure: 'Yes, sure',
             success: 'Success operation',
             error: 'An error occurred during the operation',
@@ -440,6 +451,7 @@ export default ({
         },
         admin: {
             transactions: 'transactions',
+            users:'Users',
             employeesTitle: 'Employees',
             nationality: 'Nationality',
             workshop: 'Workshop',
@@ -646,6 +658,8 @@ export default ({
         YouHavePayment : "You Have Payment .. plase Chek Transaction",
         ViewTransactions: "View Transactions",
         service:{
+            type:'Type',
+            status:'Status',
             name_ar:"Name Ar",
             name_en:"Name En",
             description_ar:"description Ar",
@@ -812,6 +826,16 @@ export default ({
             orderType: 'نوع الطلب',
         },
         auth: {
+            myorders:'طلباتي',
+            users :'المستخدمين',
+
+            name:'الاسم',
+            type:'النوع',
+            status:'الحاله',
+            active:'مفعل',
+            Noactive:' غير مفعل ',
+            employees:'المؤطف',
+            roles:'الادؤار',
             paymentError: "يوجد خطأ في هملية الدفع !",
             title: 'مرحبا بك',
             titleSub: 'أنشأ حساب جديد وانضم إلى عائلتنا',
@@ -842,7 +866,7 @@ export default ({
             newPassword: 'كلمة المرور الجديدة',
             approvedAgent: 'موثق كحساب معرض',
             accountType: 'نوع الحساب',
-            agentAccount: 'حساب معرض',
+            agentAccount: 'حساب موطف',
             customerAccount: 'حساب زبون',
             successLogout: 'تم تسجيل الخروج',
             error401: 'Error 401',
@@ -907,6 +931,8 @@ export default ({
             close: 'إغلاق',
             delete: 'حذف',
             deleteMsg: 'هل أنت متأكد من حذف هذا العنصر',
+            statusMsg: 'هل أنت متأكد من تغير الحاله هذا العنصر',
+
             sure: 'نعم، متأكد',
             success: 'تمت العملية بنجاح',
             error: 'حدث خطأ أثناء العملية',
@@ -1087,6 +1113,7 @@ export default ({
             send: 'ارسال الطلب'
         },
         admin: {
+            users:'المستخدمين',
             employeesTitle: 'الموظفون',
             nationality: 'الجنسية',
             workshop: 'الورشة التي يعمل بها',

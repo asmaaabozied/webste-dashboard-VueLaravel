@@ -104,6 +104,22 @@
                     ></v-select>
                 </v-col>
             </v-row>
+
+       <v-row justify="center" no-gutters>
+                <v-col cols="12">
+                    <v-select
+                            v-model="type"
+                            :label="$t('auth.types')"
+                            :items="types"
+                            item-value="name"
+                            item-text="label"
+                            outlined
+                            rounded
+                            dense
+                    ></v-select>
+                </v-col>
+            </v-row>
+
             <v-row justify="center" no-gutters>
                 <v-col cols="12">
                     <v-card>
@@ -215,6 +231,7 @@
                 confirm: null,
                 phone: null,
                 location: null,
+                type:null,
                 mapCenter: {lat: 24.774265, lng: 46.738586},
                 showPassword: false,
                 icons: {
@@ -227,6 +244,11 @@
                     {id: 1, label: this.$t("auth.customerAccount")},
                     {id: 2, label: this.$t("auth.agentAccount")},
                 ],
+    types: [
+                    {name: 'customer', label: this.$t("auth.customerAccount")},
+                    {name:'employee', label: this.$t("auth.employeeAccount")},
+                ],
+
                 accountType: 1,
                 acceptTerms: null,
                 errorMessages: [],
@@ -280,6 +302,9 @@
                 form.append("phone", this.phone);
                 form.append("lat", this.location.lat);
                 form.append("lon", this.location.lng);
+                form.append("type", this.type);
+
+                
 
                 axios
                         .post(url, form)

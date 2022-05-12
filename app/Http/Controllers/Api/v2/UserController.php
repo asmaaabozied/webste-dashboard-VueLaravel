@@ -5,8 +5,13 @@ namespace App\Http\Controllers\Api\v2;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\LangRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UsersRequest;
 use App\Http\Resources\Api\v2\UserResource;
+use App\Http\Resources\Api\v2\UsersResource;
 use App\User;
+use App\Users;
+
+use App\Customer;
 use Auth;
 
 
@@ -30,6 +35,13 @@ class UserController extends BaseController
 
         parent::__construct();
     }
+
+    public function getAllUser()
+    {
+        $service = UsersResource::collection(User::all());
+
+        return $this->getResponse($service);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -49,8 +61,8 @@ class UserController extends BaseController
      */
     public function store(UserRequest $request)
     {
-//        $final =  User::create($request->validated());
-//        return $this->getResponse($final, myTrans('add_success'), 200);
+       $final =  User::create($request->all());
+       return $this->getResponse($final, myTrans('add_success'), 200);
     }
 
     /**
@@ -61,7 +73,7 @@ class UserController extends BaseController
      */
     public function show($id)
     {
-        return $this->ShowCustomElement(User::class, $id, UserResource::class, myTrans('resource_not_found'));
+        return $this->ShowCustomElement(Users::class, $id, UserResource::class, myTrans('resource_not_found'));
     }
 
     /**
@@ -96,6 +108,112 @@ class UserController extends BaseController
     public function changeLang(LangRequest $request) {
         Auth::user()->update(['lang' => $request->lang]);
         return $this->getResponse(Auth::user(), myTrans('update_success'), 200);
+    }
+
+
+    public function getUser($itemId): \Illuminate\Http\JsonResponse
+    {
+        //    $this->checkUserHasPermission("show Specific", $this->permission_module_name);
+        return $this->getResponse( new UsersResource(Users::find($itemId)));
+    }
+
+
+    public function deleteItem(int $itemId): \Illuminate\Http\JsonResponse
+    {
+
+        // $this->checkUserHasPermission("destroy", $this->permission_module_name);
+
+
+        $user = User::find($itemId);
+
+
+
+        $user->delete();
+
+        return $this->getResponse(null, myTrans('delete_success'), 200);
+
+    }
+
+
+
+    public function statusItem(int $itemId): \Illuminate\Http\JsonResponse
+    {
+
+        // $this->checkUserHasPermission("destroy", $this->permission_module_name);
+
+
+        $user = User::find($itemId);
+
+        $status=( $user->status == 0)?1:0;
+        $user->status=$status;
+        $user->save();
+
+
+        return $this->getResponse(null, myTrans('delete_success'), 200);
+
+    }
+
+    public function createUser(UsersRequest $request){
+
+        // if (is_null($request->get('id'))) {
+        //     $this->checkUserHasPermission('store', $this->permission_module_name);
+        // }
+        // else {
+        //     $this->checkUserHasPermission('update', $this->permission_module_name);
+        // }
+
+
+
+
+
+         if($request->id !=='create' && $request->id >0){
+
+
+
+            $user = Users::where('id',$request->id)->first();
+
+            $user->user_name = $request->get("user_name") ?? '';
+            $user->password =bcrypt($request->get("password"))  ?? '';
+            $user->type = $request->get("type") ?? '';
+            $user->role_id = $request->get("role_id") ?? '';
+            $user->employee_id = $request->get("employee_id") ?? '';
+            $user->save();
+            $customer=Customer::where('user_id',$request->id)->first();
+            $customer->name= $user->user_name ?? '';
+            $customer->phone= $request['phone'] ?? '';
+            $customer->user_id= $user->id;
+            $customer->save();
+
+
+         }
+
+
+            else {
+
+                $user = User::create([
+                    "user_name" => $request['user_name'],
+                    "password"  => $request['password'],
+                    "role"      => 'customer',
+                    "type"=>$request['type'],
+                    'role_id'=>$request['role_id'],
+                    'employee_id'=>$request['employee_id']
+                ]);
+
+                Customer::create([
+                    "name"     => $user->user_name,
+                    "phone"    => $request->phone,
+                    "user_id"  => $user->id,
+
+                ]);
+
+                }
+
+
+
+
+
+
+        return $this->getResponse();
     }
 
     /**

@@ -76,6 +76,13 @@ export default {
               to: "roles",
               role: "admin",
           },
+
+             {
+              title: this.$t("auth.users"),
+              icon: "mdi-cogs",
+              to: "user",
+              role: "admin",
+          },
           {
               title: this.$t("topNav.services"),
               icon: "mdi-cogs",

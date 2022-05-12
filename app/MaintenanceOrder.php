@@ -35,6 +35,12 @@ class MaintenanceOrder extends BaseModel
      * @return string|null
      * @author karam mustafa
      */
+
+    public  function sparePart()
+    {
+        return  $this->belongsToMany(SparePart::class, 'maintenceorder_spare', 'maintenceorder_id', 'spare_id')->withTimestamps();
+    }
+
     public function getWarrantyImageAttribute($value)
     {
         if (isset($value)) {
@@ -90,6 +96,8 @@ class MaintenanceOrder extends BaseModel
         ];
         return $devType[$DeviceType] ?? 'undefined value';
     }
+
+
 
     /**
      * @return String

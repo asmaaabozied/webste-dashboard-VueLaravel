@@ -92,6 +92,19 @@ class MaintenanceOrderController extends BaseController
                 }
 
                 $MaintenanceOrder = MaintenanceOrder::create($data);
+
+                $spare=$request['sparepart_id'];
+                $str = explode("'",$spare);//became here an array with numbers
+                $arr = explode(',',implode('',$str));
+                $str = array_map(function($val){
+                return intval($val);
+                },$arr
+            );
+
+
+
+            $MaintenanceOrder->sparePart()->sync($str);
+
                 if ($MaintenanceOrder['has_image'] && isset($data['images'])) {
                     $this->saveImageFromMaintenance($MaintenanceOrder, $data, false);
                 }

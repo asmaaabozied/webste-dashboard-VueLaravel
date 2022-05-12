@@ -106,6 +106,17 @@ export default [
       // role: "customer",
     },
   },
+
+  {
+    path: "/customer/consultation/0",
+    name: "c00",
+    component: consultation,
+    props: { isFromNotification: false },
+    meta: {
+      requiresAuth: true,
+      // role: "customer",
+    },
+  },
   {
     path: "/customer/consultation/:id",
     name: "c11",

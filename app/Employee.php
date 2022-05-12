@@ -17,7 +17,7 @@ class Employee extends BaseModel
      */
     protected $fillable = [
         'name', 'phone', 'nationality', 'id',
-        'image', 'id_number','car_id', 'department_id'
+        'image', 'id_number','car_id', 'department_id','manger_id'
     ];
 
     /**

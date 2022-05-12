@@ -4,6 +4,10 @@
 use Illuminate\Support\Facades\Route;
 
 
+// Route::post('/users/create-user', 'UserController@createUser');
+
+Route::post('/create-usersss', 'UserController@createUser');
+
 
 Route::post('login', 'AuthSystemController@login')->name('login')->middleware('VerificationCustomersAndGalleries');
 

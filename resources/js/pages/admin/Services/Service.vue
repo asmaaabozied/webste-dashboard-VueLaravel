@@ -3,26 +3,42 @@
     <v-card width="60vw" elevation="3" class="pa-12 mb-12">
       <v-card-title>{{ $t("topNav.services") }}</v-card-title>
       <v-card-text>
-
         <v-row>
           <v-col cols="4">
             <div id="image-container">
               <v-avatar color="grey lighten-4" size="150">
                 <img v-if="imagePreview" :src="imagePreview" />
-                <v-icon v-else x-large color="secondary">{{icons.mdiAccountCircle}}</v-icon>
+                <v-icon v-else x-large color="secondary">{{
+                  icons.mdiAccountCircle
+                }}</v-icon>
               </v-avatar>
-              <input type="file" style="display:none;" id="imageInput" ref="image" v-on:change="onImageChange"/>
-              <v-btn id="image-remove" v-if="image" icon small @click="removeImage">
+              <input
+                type="file"
+                style="display:none;"
+                id="imageInput"
+                ref="image"
+                v-on:change="onImageChange"
+              />
+              <v-btn
+                id="image-remove"
+                v-if="image"
+                icon
+                small
+                @click="removeImage"
+              >
                 <v-icon color="red">{{ icons.mdiClose }}</v-icon>
               </v-btn>
-              <v-btn id="image-choose" small icon @click="addImage"><v-icon>{{ icons.mdiPaperclip }}</v-icon></v-btn>
+              <v-btn id="image-choose" small icon @click="addImage"
+                ><v-icon>{{ icons.mdiPaperclip }}</v-icon></v-btn
+              >
             </div>
-            <div class="red--text" v-for="e in imageErrors" :key="e">{{ e }}</div>
+            <div class="red--text" v-for="e in imageErrors" :key="e">
+              {{ e }}
+            </div>
           </v-col>
         </v-row>
 
         <v-row>
-
           <v-col cols="6">
             <v-text-field
               v-model="name_ar"
@@ -50,7 +66,6 @@
               spellcheck="false"
             ></v-text-field>
           </v-col>
-
         </v-row>
 
         <v-row>
@@ -83,18 +98,37 @@
         </v-row>
 
         <v-row>
-            <v-col cols="12">
-                <v-select
-                        :items="[0,1,2,3,4,5]"
-                        item-text="rating"
-                        v-model="rating"
-                        :label="$t('service.rating')"
-                        rounded
-                        outlined>
-                </v-select>
-            </v-col>
+          <v-col cols="12">
+            <v-select
+              :items="[0, 1, 2, 3, 4, 5]"
+              item-text="rating"
+              v-model="rating"
+              :label="$t('service.rating')"
+              rounded
+              outlined
+            >
+            </v-select>
+          </v-col>
         </v-row>
 
+        <v-row>
+          <v-col cols="12">
+            <v-autocomplete
+              v-model="role_id"
+              :items="roles"
+              :label="$t('auth.roles')"
+              outlined
+              dense
+              rounded
+              chips
+              solo
+              small-chips
+              item-value="id"
+              item-text="name"
+              multiple
+            ></v-autocomplete>
+          </v-col>
+        </v-row>
       </v-card-text>
       <v-card-actions class="d-flex justify-center">
         <v-btn @click="save" rounded>{{ $t("general.save") }}</v-btn>
@@ -120,6 +154,8 @@ export default {
 
   data() {
     return {
+      roles: [],
+
       icons: {
         mdiAccountCircle,
         mdiClose,
@@ -132,7 +168,8 @@ export default {
       description_en: null,
       imagePreview: null,
       image: null,
-      rating:0
+      role_id: null,
+      rating: 0,
     };
   },
   validations: {
@@ -155,8 +192,8 @@ export default {
   computed: {
     nameErrors() {
       const errors = [];
-      if (!this.$v.name_ar.$dirty){
-          return errors;
+      if (!this.$v.name_ar.$dirty) {
+        return errors;
       }
       !this.$v.name_ar.required && errors.push(this.$t("validate.required"));
       return errors;
@@ -202,9 +239,8 @@ export default {
       document.getElementById("imageInput").click();
     },
     save() {
-
-      // this.$v.$touch ();
-      // if (this.$v.$invalid) return;
+      this.$v.$touch();
+      if (this.$v.$invalid) return;
 
       let form = new FormData();
       form.append(`name_ar`, this.name_ar);
@@ -212,51 +248,67 @@ export default {
       form.append(`description_ar`, this.description_ar);
       form.append(`description_en`, this.description_en);
       form.append(`image`, this.image);
-      form.append("rating",this.rating);
+      form.append("rating", this.rating);
+      form.append("role_id", this.role_id);
 
+  //         let data = {
+  //           name_ar: this.name_ar,
+  //           name_en: this.name_en,
 
-      let url="";
-      if (this.id > 0)
-      {
-          form.append('id', this.id);
-          url =  `/api/admin-panel/services/update-service`;
+  //               description_ar: this.description_ar,
+  //           description_en: this.description_en,
+
+  //             rating: this.rating,
+  //           role_id: this.role_id,
+  //             image: this.image,
+  //       };
+
+  // if (this.id != 0) {
+  //           data["id"] = this.id;
+  //       }
+      let url = "";
+      if (this.id > 0) {
+        form.append("id", this.id);
+        url = `/api/admin-panel/services/update-service`;
+      } else {
+        url = `/api/admin-panel/services/create-service`;
       }
-      else
-      {
-           url =  `/api/admin-panel/services/create-service`;
-      }
 
-      axios.post(url, form).then((res) => {
+      axios
+        .post(url,form)
+        .then((res) => {
           if (res.data.status != 200) {
-           console.warn(err)
+            console.warn(err);
             return;
           }
           this.$notify({
             text: this.$t("general.success"),
             type: "success",
           });
-            this.$router.go(-1)
+      
+
+            this.$router.push({name: "services"});
+
         })
         .catch((err) => {
-          console.warn(err)
+          console.warn(err);
         });
     },
     load() {
       axios
         .get(`/api/admin-panel/services/getService/${this.id}`)
         .then((res) => {
-
-            let data = res.data.data;
-            (this.name_ar = data.name_ar),
+          let data = res.data.data;
+          (this.name_ar = data.name_ar),
             (this.name_en = data.name_en),
             (this.description_ar = data.description_ar),
             (this.description_en = data.description_en),
+            (this.role_id = data.role_id),
             (this.imagePreview = data.img);
-            (this.rating=data.rating)
-
+          this.rating = data.rating;
         })
         .catch((err) => {
-          console.warn(err)
+          console.warn(err);
         });
     },
     createNew() {
@@ -264,10 +316,22 @@ export default {
       this.name_en = null;
       this.description_ar = null;
       this.description_en = null;
+      this.role_id = [];
       this.imagePreview = null;
       this.image = null;
-      this.rating=0;
+      this.rating = 0;
       this.$v.$reset();
+    },
+    loadDefaults() {
+      //load roles
+      axios
+        .get(`/api/admin-panel/getALLRoles`)
+        .then((res) => {
+          this.roles = res.data.data;
+        })
+        .catch((err) => {
+          console.warn(err);
+        });
     },
   },
   watch: {
@@ -278,6 +342,9 @@ export default {
         else if (val == 0) this.createNew();
       },
     },
+  },
+  created() {
+    this.loadDefaults();
   },
 };
 </script>

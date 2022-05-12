@@ -1,130 +1,98 @@
 <template>
-    <div>
-        <h3>{{$t('technical.orders.title')}}</h3>
-        <v-row>
-            <v-col cols="2">
-                <v-select
-                        :label="$t('general.filterByState')"
-                        v-model="statusFilter"
-                        :items="statusItems"
-                        item-text="text"
-                        item-value="value"
-                        clearable
-                ></v-select>
-            </v-col>
-            <v-col cols="2">
-                <v-select
-                        :label="$t('general.filterByType')"
-                        v-model="typeFilter"
-                        :items="filterByTypeItems"
-                        item-text="text"
-                        item-value="value"
-                        clearable
-                ></v-select>
-            </v-col>
-        </v-row>
-        <v-simple-table fixed-header>
-            <template v-slot:default>
-                <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">{{$t('myRequests.requestStatus')}}</th>
+  <div>
+     <h3>{{$t('technical.orders.title')}}</h3>
+    <!-- controls -->
+    <v-row>
+      <v-spacer></v-spacer>
+      <v-col md="2" lg="2" xl="2">
+        <v-btn color="primary" dark @click="addItem" icon>
+        </v-btn>
+      </v-col>
+    </v-row>
+    <!-- items -->
+    <v-simple-table dense fixed-header>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-center">#</th>
+                   <th class="text-center">{{$t('auth.users')}}</th>
+         <th class="text-center">{{$t('myRequests.requestStatus')}}</th>
                     <th class="text-center">{{ $t("myRequests.requestTechnicalStatus") }}</th>
                     <th class="text-center">{{$t('myRequests.requestType')}}</th>
                     <th class="text-center">{{$t('myRequests.requestDate')}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(item, i) in itemsFiltered" :key="i">
-                    <td class="text-center">{{ i + 1 }}</td>
-                    <td class="text-center">{{ $getOrderStatus(item.status).label }}</td>
-                    <td class="text-center">
-                        {{ $getTechnicalStatus(item.technical_status).label }}
-                    </td>
-                    <td class="text-center">{{ $getOrdertype(item.type) }}</td>
-                    <td class="text-center">{{ formatDate(item.created_at) }}</td>
-                </tr>
-                </tbody>
-            </template>
-        </v-simple-table>
-    </div>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, i) in items" :key="i" >
+          <th class="text-center">{{i+1}}</th>
+          <td class="text-center">{{ item.user }}</td>
+          <td class="text-center">{{ item.status }}</td>
+          <td class="text-center">{{ item.technical_status }}</td>
+          <td class="text-center">{{ item.type }}</td>
+          <td class="text-center">{{ item.created_at }}</td>
+  
+        
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+ 
+  </div>
 </template>
 <script>
-    export default {
-        name: "orders",
 
-        metaInfo() {
-            const locale = this.$i18n.locale;
-            return {
-                title: locale == "en" ? "Orders" : "الطلبات",
-            };
-        },
+export default {
+  name: "services",
 
-        data() {
-            return {
-                items: [],
-                statusItems: [
-                    {value: "received", text: this.$t("myRequests.received")},
-                    {value: "order is being processed", text: this.$t("myRequests.processing")},
-                    {value: "under maintenance", text: this.$t("myRequests.maintaining")},
-                    {value: "order finish", text: this.$t("myRequests.finished")},
-                    {value: "order declined", text: this.$t("myRequests.declined")}
-                ],
-                filterByTypeItems: [
-                    {
-                        value: "prevention_maintenance_order",
-                        text: this.$t("preventiveMaintenance.order")
-                    },
-                    {
-                        value: "maintenance_order",
-                        text: this.$t("myRequests.maintenanceRequest")
-                    },
-                    {
-                        value: "review_order",
-                        text: this.$t("services.srv05.title")
-                    }
-                ],
-                statusFilter: null,
-                typeFilter: null
-            };
-        },
-        computed: {
-            itemsFiltered() {
-                var filter = {};
-                if (this.statusFilter) filter["status"] = this.statusFilter;
-                if (this.typeFilter) filter["type"] = this.typeFilter;
+  metaInfo() {
+    const locale = this.$i18n.locale;
+    return {
+      title: locale == "en" ? "Services" : "الخدمات",
+    };
+  },
 
-                function filterBy(item) {
-                    for (var key in filter) {
-                        if (item[key] === undefined || item[key] !== filter[key]) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
+  data() {
+    return {
+      items: [],
+     
+      deleteDialog: false,
+      deleteItemId: null,
+    };
+  },
+  methods: {
+    open(id) {
+      this.$router.push({ name: "service", params: { id: id } });
+    },
+    addItem(id) {
+      this.$router.push({ name: "service", params: { id: 0 } });
+    },
+    deleteItem(id) {
+      this.deleteItemId = id;
+      this.deleteDialog = true;
+    },
+    load() {
 
-                let items = this.items.slice(0);
-                return items.filter(filterBy);
-            }
-        },
-        methods: {
-            load() {
-                axios
-                        .get(`/api/order`)
+      axios
+                        .get(`/api/orderss`)
+                        
                         .then(res => {
                             this.items = res.data.data;
+                            console.log("itemss",this.items)
+                            console.log("res",res)
+
                         })
                         .catch(err => {
                             console.warn(err)
                         });
-            }
-        },
-        beforeRouteEnter(to, from, next) {
-            next(vm => {
-                vm.load();
-            });
-        }
-    };
+    },
+ 
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.load();
+    });
+  },
+};
 </script>
-<style scoped>
-</style>
+<style scoped></style>

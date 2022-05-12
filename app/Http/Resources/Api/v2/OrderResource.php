@@ -17,6 +17,7 @@ class OrderResource extends JsonResource
             'technical_reason'             => $this->technical_reason,
             'technical_status'             => $this->resolveTechStatus($this->technical_status, $this->status),
             'user_id'                      => $this->user_id,
+            'user'                          =>$this->user->user_name ?? '',
             'type'                         => $this->type,
             'rating_info'                  => $this->rating,
             'job_application_order'        => $this->jobApplicationOrder,

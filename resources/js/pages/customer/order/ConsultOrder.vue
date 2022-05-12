@@ -15,24 +15,25 @@
           autocomplete="off"
           autocorrect="off"
           spellcheck="false"
-          :readonly="id > 0"
+        
         ></v-textarea>
       </div>
       <div class="pa-6 d-flex justify-end">
         <v-btn
           rounded
           color="primary"
-          v-if="id == 0"
+      
           class="mx-2"
           @click="add"
           >{{ $t("consultation.send") }}</v-btn
         >
+            <!-- v-if="id == 0" -->
         <v-btn
           rounded
           color="secondary"
           class="mx-2"
           :to="{ name: 'home' }"
-          v-if="id == 0"
+       
           >{{ $t("general.cancel") }}</v-btn
         >
       </div>
@@ -57,6 +58,7 @@ export default {
 
   data() {
     return {
+        id: this.$route.params.id,
       form: {
         description: null,
       },
@@ -65,8 +67,16 @@ export default {
   },
   methods: {
     add() {
+
+        let data = {
+            description: this.form.description
+        };
+
+        if (this.id != 0) {
+            data["id"] = this.id;
+        }
       axios
-        .post("/api/ConsultantOrder", { description: this.form.description })
+        .post("/api/ConsultantOrder",data)
         .then((res) => {
           this.$notify({
             text: this.$t("general.success"),
@@ -99,6 +109,7 @@ export default {
         .get(`/api/ConsultantOrder/${this.id}`)
         .then((res) => {
           this.form.description = res.data.data.description;
+          console.log("form",this.form.description)
         })
         .catch((err) => {
           console.warn(err);

@@ -44,6 +44,7 @@ Route::get('/admin-panel/sparePart/getAllSparePart/{device_id}', 'sparePartContr
 
 Route::group(['middleware' => 'auth:api'], function () {
 
+
     Route::group(['middleware' => ['VerificationCustomersAndGalleries' , 'Lang']], function () {
         Route::resource('user', 'UserController');
 
@@ -56,6 +57,15 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/admin-panel/services/getService/{itemId}', 'ServiceController@getService');
         Route::post('/admin-panel/services/update-service', 'ServiceController@updateService');
 
+        Route::get('admin-panel/getAllUser', 'UserController@getAllUser');
+        Route::post('/admin-panel/users/create-user', 'UserController@createUser');
+
+        Route::delete('/admin-panel/users/delete/{itemId}', 'UserController@deleteItem');
+        Route::delete('/admin-panel/users/status/{itemId}', 'UserController@statusItem');
+
+        Route::get('/admin-panel/users/getUser/{itemId}', 'UserController@getUser');
+        Route::post('/admin-panel/users/update-user', 'UserController@updateUser');
+
 
         Route::resource('gallery', 'GalleryController');
         Route::resource('country', 'CountryController');
@@ -65,8 +75,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::resource('customer_alerts', 'CustomerAlertController');
         Route::resource('InstallmentOrder', 'InstallmentOrderController')->except(['destroy']);
         Route::put('restartInstallmentOrder/{id}', 'InstallmentOrderController@restartInstallmentOrder');
+        Route::get('orderss', 'OrderController@getorderss')->name('orderss');
+
+
         Route::resource('order', 'OrderController')->except(['destroy']);
         Route::resource('OrderReviewOrder', 'OrderReviewOrderController')->except(['destroy']);
+
 
         //OrderServicesPage
 
@@ -86,6 +100,9 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::resource('PreventionMaintenanceOrder', 'PreventionMaintenanceOrderController')->except('destroy');
         Route::resource('manufacture', 'ManufactureController');
         Route::get('/getManufactureDevices/{id}','ManufactureController@getManufactureDevices');
+
+        Route::get('/getsparepartDevices/{id}/{ids}','ManufactureController@getsparepartDevices');
+
         Route::post('orderFinished', 'OrderController@orderFinished');
         Route::put('MaintenanceSetStatus/{id}', 'MaintenanceOrderController@updateStatus');
         Route::put('restartMaintinanceOrder/{id}', 'MaintenanceOrderController@restartMaintinanceOrder');

@@ -36,6 +36,9 @@ const device  = () => import('./Devices/Device.vue');
 const sparePart = () => import('./Devices/SpareParts/SpareParts.vue');
 const SpareParts  = () => import('./Devices/SpareParts/SparePart.vue');
 
+const user = () => import('./users/users.vue');
+const users  = () => import('./users/user.vue');
+
 export default [
     {
         path: "/admin-panel/roles/role/:id",
@@ -324,6 +327,27 @@ export default [
         path: "/admin-panel/sparePart/:id",
         name: "SpareParts",
         component: SpareParts,
+        meta: {
+            requiresAuth: true,
+            role: "admin",
+        },
+    },
+
+
+
+    {
+        path: "/admin-panel/user",
+        name: "user",
+        component: user,
+        meta: {
+            requiresAuth: true,
+            role: "admin",
+        },
+    },
+    {
+        path: "/admin-panel/user/:id",
+        name: "users",
+        component: users,
         meta: {
             requiresAuth: true,
             role: "admin",

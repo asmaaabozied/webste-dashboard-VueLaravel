@@ -41,6 +41,7 @@
 </template>
 
 <script>
+
 export default {
   name: "ConsultOrder",
 
@@ -72,7 +73,7 @@ title: locale == "en" ? "Create review order" : "إنشاء طلب مراجعة"
             text: this.$t("general.success"),
             type: "success",
           });
-          this.$router.push({ name: "c2" });
+       this.$router.push({ name: "c2" });
         })
         .catch((err) => {
           console.warn(err);

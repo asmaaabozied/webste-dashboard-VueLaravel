@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\BaseModel;
-
+use App\Role;
 class Service extends BaseModel
 {
 
@@ -23,4 +23,12 @@ class Service extends BaseModel
     {
         return asset('/storage/files/images/services_images/'.$this->attributes['img']);
     }
+
+
+
+    public  function roles()
+    {
+        return  $this->belongsToMany(Role::class, 'role_service', 'service_id', 'role_id')->withTimestamps();
+    }
+
 }

@@ -1,6 +1,8 @@
 <template>
     <div>
         <v-card width="25vw" class="rounded-lg" style="height: 350px">
+                        <v-card-text>{{$props.item.name}}</v-card-text>
+
             <v-img height="20vh" :src="$props.item.img"></v-img>
 
             <v-card-title>{{$props.item.title}}</v-card-title>

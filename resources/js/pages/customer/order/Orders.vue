@@ -24,7 +24,7 @@
             <td class="text-center">
               {{ $getOrderStatus(item.status).label }}
             </td>
-            <td class="text-center">{{ $getOrdertype(item.type) }}</td>
+            <td class="text-center">{{ item.type }}</td>
             <td class="text-center">{{ formatDate(item.created_at) }}</td>
             <td class="text-center">
               <v-menu offset-y>
@@ -150,6 +150,7 @@ export default {
         .then((res) => {
             console.log(res);
           this.items = [...this.items, ...res.data.data.order_info];
+          console.log("items",this.items);
           this.page += 1;
 
         })
@@ -219,6 +220,11 @@ export default {
         case "installment_order":
           url = `/api/InstallmentOrder/${this.deleteInfo.id}`;
           break;
+
+             case "services-pages":
+          url = `/api/services-pages/${this.deleteInfo.id}`;
+          break;
+          
         default:
           break;
       }

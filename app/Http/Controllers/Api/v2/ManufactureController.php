@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api\v2;
+use App\Models\spare_parts;
 
 use App\Manufacture;
 use App\Models\manufactures_devices;
@@ -85,4 +86,13 @@ class ManufactureController extends BaseController
         $manufacture_devices = manufactures_devices::getManufacturesDevices($manufactureId);
         return $this->getResponse($manufacture_devices);
     }
+
+
+
+    public function getsparepartDevices($manufactureId,$device_id): \Illuminate\Http\JsonResponse
+    {
+        $spareparts = spare_parts::where('device_id',$device_id)->where('manufacture_id',$manufactureId)->get();
+        return $this->getResponse($spareparts);
+    }
+
 }

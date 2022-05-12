@@ -27,6 +27,7 @@ class EmployeeRequest extends BaseRequest
             "role" => "{$this->rule}|exists:roles,name",
             "user_name" => "{$this->rule}|unique:users,user_name",
             "car_id" => "sometimes|exists:cars,id",
+            "manger_id" => "sometimes|exists:employees,id",
             "password" => "{$this->rule}",
             //            "permissions" => "{$this->>rule}|array|min:0",
         ];
@@ -42,6 +43,8 @@ class EmployeeRequest extends BaseRequest
                 "role" => "{$this->rule}|exists:roles,name",
                 "user_name" => "{$this->rule}|unique:users,user_name,${user_id}",
                 "car_id" => "sometimes|exists:cars,id",
+                "manger_id" => "sometimes|exists:employees,id",
+
                 "password" => "{$this->rule}",
             ];
         }

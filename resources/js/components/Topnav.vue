@@ -361,12 +361,26 @@
                 >{{ $t("general.modifyPass") }}
               </v-list-item-title>
             </v-list-item>
+
+              <v-list-item @click="myorders"
+              v-if="$roleEquals('customer') || $roleEquals('gallery')"
+
+
+              >
+              <v-list-item-title>
+              <v-icon class="me-6">{{ icons.mdiFormTextboxPassword }}</v-icon>
+                {{ $t("auth.myorders") }}
+              </v-list-item-title>
+            </v-list-item>
+
             <v-list-item @click="logout">
               <v-list-item-title>
                 <v-icon class="me-6">{{ icons.mdiLogout }}</v-icon>
                 {{ $t("auth.logout") }}
               </v-list-item-title>
             </v-list-item>
+
+
           </v-list>
         </v-menu>
       </div>
@@ -659,6 +673,10 @@ export default {
         .finally(() => {
           this.$router.push({ name: "home" });
         });
+    },
+    myorders(){
+this.$router.push({ name: "c2" });
+
     },
     openNotification(id) {
       //to-do

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\v2;
 
 use App\ConsultantOrder;
+use App\ConsultantOrders;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\ConsultantOrderRequest;
 use App\Http\Resources\Api\v2\ConsultantOrderResource;
 use App\Http\Resources\Collection\Api\v2\ConsultantOrderCollection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use function App\Helpers\mainManagerRoles;
@@ -60,19 +62,38 @@ class ConsultantOrderController extends BaseController
         }
     }
 
-    public function store(ConsultantOrderRequest $request)
+    public function store(Request $request)
     {
-        try {
-            $final = DB::transaction(function () use ($request) {
-                $this->checkUserHasPermission("store",$this->permission_module_name);
-                $data = $request->validated();
+
+
+
+
+
+    try {
+        $final = DB::transaction(function () use ($request) {
+            $this->checkUserHasPermission("store",$this->permission_module_name);
+            $data = $request->all();
+            if($request->id=4){
                 $data['order_id'] = $this->saveOrder('consultant_order')->id;
+
                 return ConsultantOrder::create($data);
-            });
-            return $this->getResponse($final, myTrans('add_success'), false, 200);
-        } catch (\Exception $e) {
-            self::throwException(__CLASS__, __LINE__, $e);
+
+        }else{
+     $ConsultantOrder= ConsultantOrder::find($request->id);
+     $ConsultantOrder->description=$request->description;
+    $ConsultantOrder->save();
+
         }
+
+
+        });
+        return $this->getResponse($final, myTrans('add_success'), false, 200);
+    } catch (\Exception $e) {
+        self::throwException(__CLASS__, __LINE__, $e);
+    }
+
+
+
     }
 
     public function destroy($id)

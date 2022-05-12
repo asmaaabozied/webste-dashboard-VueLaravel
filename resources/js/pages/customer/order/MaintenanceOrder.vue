@@ -69,9 +69,34 @@
                                   rounded
                                   dense
                                   clearable
+         
+                                    @change="getsparepartsDevices()"
                           />
                       </v-col>
                   </v-row>
+
+    
+
+
+
+      <v-row justify="center">
+               <v-col cols="12" md="4" xl="3">
+            <v-autocomplete
+              v-model="sparepart_id"
+              :items="spareparts"
+              :label="$t('auth.spareparts')"
+              outlined
+              dense
+              rounded
+              chips
+              solo
+              small-chips
+           :item-text="`name_${$i18n.locale}`"
+                item-value="id"
+              multiple
+            ></v-autocomplete>
+          </v-col>
+        </v-row>
 
                   <v-row justify="center">
                       <v-col cols="12" md="4" xl="3">
@@ -344,6 +369,9 @@ export default {
 
   data() {
     return {
+      spareparts:[],
+      sparepart:null,
+      sparepart_id:null,
       icons: {
         mdiMapMarkerPlus,
         mdiMapMarkerOff,
@@ -457,6 +485,8 @@ export default {
         form.append(`fix_place`, 0);
         form.append(`has_image`, this.has_image);
         form.append(`appointment_id`, appointmentId);
+        form.append(`sparepart_id`, this.sparepart_id);
+
         if (this.discount) form.append(`discount`, this.discount);
         if (this.images)
           for (let i = 0; i < this.images.length; i++)
@@ -498,6 +528,7 @@ export default {
       this.manufacture = null;
       this.description = null;
       this.location = null;
+      this.sparepart_id=null;
 
       this.warranty_image = null;
       this.images = null;
@@ -558,6 +589,20 @@ export default {
                 console.warn(err);
             });
     },
+    
+   getsparepartsDevices() {
+     console.log('factory',this.manufacture);
+     console.log('device',this.device_type);
+        axios
+            .get(`/api/getsparepartDevices/${this.manufacture}/${this.device_type}`)
+            .then((res) => {
+                this.spareparts = res.data.data;
+            })
+            .catch((err) => {
+                console.warn(err);
+            });
+    },
+
     getGeoLocation() {
         this.$getLocation({
             enableHighAccuracy: true,
@@ -625,6 +670,7 @@ export default {
   created() {
     this.loadDefaults();
     this.getManufacturer();
+    this.getsparepartsDevices();
   },
 };
 </script>

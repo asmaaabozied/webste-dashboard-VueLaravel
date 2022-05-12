@@ -146,6 +146,21 @@
           ></v-select>
         </v-col>
       </v-row>
+      
+
+         <v-row>
+        <v-col cols="12">
+          <v-select
+            :items="employees"
+            item-text="name"
+            item-value="id"
+            v-model="manger_id"
+            :label="$t('admin.employee')"
+            rounded
+            outlined
+          ></v-select>
+        </v-col>
+      </v-row>
     </v-card-text>
     <v-card-actions class="d-flex justify-center">
       <v-btn rounded color="primary" dark @click="save">{{
@@ -176,6 +191,7 @@ export default {
         mdiAccountCircle,
       },
       name: null,
+      manger_id:null,
       username: null,
       password: null,
       confirm: null,
@@ -186,6 +202,7 @@ export default {
       profileImagePreview: null,
       profileImage: null,
       roles: [],
+      employees:[],
       role: null,
       id: this.$route.params.id,
     };
@@ -248,6 +265,8 @@ export default {
       form.append(`id_number`, this.idNumber);
       if (this.profileImage) form.append(`image`, this.profileImage);
       form.append(`role`, this.role);
+       form.append(`manger_id`, this.manger_id);
+      
       if (this.id != 0) form.append("_method", "PUT");
       let url = this.id ? `/api/employee${this.id == 0 ? '' : '/' + this.id }` : `/api/employee`;
       axios
@@ -283,6 +302,7 @@ export default {
           this.nationality = data.nationality;
           this.idNumber = data.id_number;
           this.role = data.role;
+          this.manger_id=data.manger_id;
           this.username = data.user_info.user_name;
           this.profileImagePreview = data.image;
         })
@@ -302,6 +322,7 @@ export default {
       this.profileImagePreview = null;
       this.profileImage = null;
       this.role = null;
+      this.manger_id=null;
       this.$v.$reset();
     },
     loadDefaults() {
@@ -310,6 +331,17 @@ export default {
         .get(`/api/allRole`)
         .then((res) => {
           this.roles = res.data.data;
+        })
+        .catch((err) => {
+          console.warn(err)
+        });
+
+        //load employee
+
+           axios
+        .get(`/api/employee`)
+        .then((res) => {
+          this.employees = res.data.data;
         })
         .catch((err) => {
           console.warn(err)

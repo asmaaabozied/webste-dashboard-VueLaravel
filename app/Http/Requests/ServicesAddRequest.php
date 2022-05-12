@@ -14,6 +14,8 @@ class ServicesAddRequest extends BaseRequest
             "description_ar" => "required",
             "description_en" => "required",
             "image"          => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            //  "image"          => "nullable",
+
             "rating"         => "required|int"
         ];
 

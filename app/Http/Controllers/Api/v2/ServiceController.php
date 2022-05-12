@@ -7,6 +7,8 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\ServicesAddRequest;
 use App\Http\Requests\ServicesEditRequest;
 use App\Http\Resources\Api\v2\ServiceResource;
+use App\Http\Resources\Api\v2\ServicesResource;
+
 use App\Models\Service;
 use Illuminate\Http\Request;
 
@@ -36,6 +38,8 @@ class ServiceController extends BaseController
 
     public function createService(ServicesAddRequest $request)
     {
+
+
         $this->checkUserHasPermission("store", $this->permission_module_name);
 
         $request->validated();
@@ -43,6 +47,20 @@ class ServiceController extends BaseController
         $path = "files/images/services_images/";
         $input['img'] = "/storage/".$path.$this->SaveFile($request->image, 'image', null, $path);
         $data = Service::create($input);
+        $role=$request['role_id'];
+        // $url=preg_replace('/\?first_name=[^\&]*\&last_name=[^\&]*/', '', $role);
+        // $str = ltrim($role, 'g');
+        $str = explode("'",$role);//became here an array with numbers
+        $arr = explode(',',implode('',$str));
+        $str = array_map(function($val){
+return intval($val);
+        },$arr
+    );
+
+
+
+        $data->roles()->sync($str);
+
         return $this->getResponse($data, myTrans('add_success'), 200);
 
     }
@@ -59,8 +77,20 @@ class ServiceController extends BaseController
             unset($input["image"]);
             unset($input["id"]);
         }
-
+        $data=Service::find($request->id);
         Service::find($request->id)->update($input);
+
+        $role=$request['role_id'];
+        $str = explode("'",$role);//became here an array with numbers
+        $arr = explode(',',implode('',$str));
+        $str = array_map(function($val){
+return intval($val);
+        },$arr
+    );
+
+
+
+        $data->roles()->sync($str);
 
         return $this->getResponse(Service::findOrFail($request->id), myTrans('update_success'), 200);
     }
@@ -88,7 +118,7 @@ class ServiceController extends BaseController
     public function getService($itemId): \Illuminate\Http\JsonResponse
     {
            $this->checkUserHasPermission("show Specific", $this->permission_module_name);
-        return $this->getResponse(Service::find($itemId));
+        return $this->getResponse( new ServicesResource(Service::find($itemId)));
     }
 
 }

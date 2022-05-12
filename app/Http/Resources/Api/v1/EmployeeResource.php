@@ -25,6 +25,7 @@ class EmployeeResource extends JsonResource
             'nationality' => $this->nationality ?? '',
             'id_number'   => $this->id_number ?? '',
             'car'         => $this->car ?? '',
+            'manger_id'=>$this->manger_id ?? '',
             'role'        => $role ?? '',
             'order_info'  => OrderResource::collection($this->orders),
             'user_info'   => $this->user ?? '',

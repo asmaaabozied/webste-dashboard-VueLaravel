@@ -9,6 +9,8 @@ use App\Http\Resources\Api\v2\OrderReviewOrderResource;
 use App\Http\Resources\Collection\Api\v2\OrderReviewOrderCollection;
 use App\OrderReviewOrder;
 use App\Models\ServicePage;
+use App\Order;
+use App\Orders;
 use Auth;
 use function App\Helpers\userHasRole;
 
@@ -54,7 +56,9 @@ class OrderReviewOrderController extends BaseController
     }
 
     public function OrderServicesPage(OrderServicesAddRequest $request){
-        $data = $request->validated();
+
+
+        $data = $request->all();
         // $this->CheckDiscountIsExsist("store",$this->permission_module_name);
          try {
              $data['service_id'] =$request['id'];
@@ -62,7 +66,16 @@ class OrderReviewOrderController extends BaseController
              $data['user_id'] =auth()->user()->id;
 
              $data['status'] =1;
+
+
+             Orders::create(['user_id'=>auth()->user()->id,'type'=>'services-pages']);
+
+
              $final = ServicePage::create($data);
+
+
+
+
          } catch (\Exception $e) {
              self::throwException(__CLASS__, __LINE__, $e);
          }

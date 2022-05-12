@@ -280,7 +280,7 @@ class UserResource extends JsonResource
     private function responseForMainManager($user = null)
     {
         try {
-            $query = Order::whereIn('type', ['maintenance_order', 'prevention_maintenance_order',])->orderBy('updated_at', 'DESC');
+            $query = Order::whereIn('type', ['maintenance_order', 'prevention_maintenance_order',])->where('user_id',auth()->user()->id)->orderBy('updated_at', 'DESC');
             if (request()->status)
                 $query->where('status', $this->orderStatus[request()->status]);
 
@@ -339,7 +339,7 @@ class UserResource extends JsonResource
             $query = Order::whereIn('type', [
                 'maintenance_order',
                 'installment_order',
-            ])->where('status', '>=', 1)->orderBy('updated_at', 'DESC');
+            ])->where('status', '>=', 1)->where('user_id',auth()->user()->id)->orderBy('updated_at', 'DESC');
 
             if (request()->status)
                 $query->where('status', $this->orderStatus[request()->status]);
@@ -368,7 +368,7 @@ class UserResource extends JsonResource
         try {
             $query = Order::whereIn('type', [
                 'installment_order',
-            ])->orderBy('updated_at', 'DESC');
+            ])->where('user_id',auth()->user()->id)->orderBy('updated_at', 'DESC');
 
             if (request()->status)
                 $query->where('status', $this->orderStatus[request()->status]);
@@ -395,7 +395,7 @@ class UserResource extends JsonResource
     private function responseForHrManager($user = null)
     {
         try {
-            $query = Order::where('type', 'job_application_order')->orderBy('updated_at', 'DESC');
+            $query = Order::where('type', 'job_application_order')->where('user_id',auth()->user()->id)->orderBy('updated_at', 'DESC');
 
             if (request()->status)
                 $query->where('status', $this->orderStatus[request()->status]);
@@ -422,7 +422,7 @@ class UserResource extends JsonResource
     private function responseForConsultingManager($user = null)
     {
         try {
-            $query = Order::where('type', "consultant_order")->orderBy('updated_at', 'DESC');
+            $query = Order::where('type', "consultant_order")->where('user_id',auth()->user()->id)->orderBy('updated_at', 'DESC');
 
             if (request()->status)
                 $query->where('status', $this->orderStatus[request()->status]);

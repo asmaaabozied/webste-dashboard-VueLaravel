@@ -96,7 +96,7 @@ class Order extends BaseModel
 
     public function getPrice2()
     {
-        $price = $this->attributes['price'];
+        $price = $this->attributes['price'] ?? 0;
         $discount_code_id = $this->attributes['discount_code_id'];
         // check if discount for this order is not null which that mean we will deduct them amount
         if ($discount_code_id != null | $discount_code_id != '') {
@@ -142,7 +142,7 @@ class Order extends BaseModel
 
     public function getPriceAttribute()
     {
-        $price = $this->attributes['price'];
+        $price = $this->attributes['price'] ?? 0 ;
         $discount_code_id = $this->attributes['discount_code_id'];
         // check if discount for this order is not null which that mean we will deduct them amount
         if ($discount_code_id != null | $discount_code_id != '') {

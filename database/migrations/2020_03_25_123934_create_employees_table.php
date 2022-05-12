@@ -16,10 +16,12 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->unsignedInteger('id')->unique();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->bigInteger('phone')->unique();
             $table->string('nationality');
             $table->string('image');
+            $table->integer('manger_id')->nullable();
+
             $table->string('id_number')->unique();
             $table->foreign('id')->references('id')->on('users');
             $table->primary('id');

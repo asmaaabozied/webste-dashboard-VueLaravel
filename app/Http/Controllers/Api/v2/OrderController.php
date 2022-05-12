@@ -9,6 +9,8 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\OrderRequest;
 use App\Http\Requests\OrderFinishedRequest;
 use App\Http\Resources\Api\v2\OrderResource;
+use App\Http\Resources\Api\v2\OrdersResource;
+
 use App\Http\Resources\OrderSpisiaclResourc;
 use App\Order;
 use Auth;
@@ -26,12 +28,22 @@ class OrderController extends BaseController
 
     public function index()
     {
+
         try {
+
+
             return $this->getAllDataFromIndex(OrderResource::class, Order::class, Auth::user(), 'orders');
 
         } catch (\Exception $e) {
             self::throwException(__CLASS__, __LINE__, $e);
         }
+    }
+
+    public function getorderss(){
+        $orders = OrdersResource::collection(Order::all());
+
+        return $this->getResponse( $orders);
+
     }
 
 

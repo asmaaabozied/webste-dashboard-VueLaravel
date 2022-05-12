@@ -57,6 +57,7 @@ class AuthSystemController extends BaseController
                 "user_name" => $request->user_name,
                 "password"  => $request['password'],
                 "role"      => 'customer',
+                "type"=>$request['type']
             ]);
 
             Customer::create([
@@ -117,6 +118,9 @@ class AuthSystemController extends BaseController
 
     public function getAuthDetails()
     {
+
+        return $this->getResponse(new UserResource(User::find(Auth::user()->id)), myTrans('GET_USER_DETAILS_SUCCESS'));
+        // dd(User::find(auth()->user()->id));
         try {
             return $this->getResponse(new UserResource(User::find(Auth::user()->id)), myTrans('GET_USER_DETAILS_SUCCESS'));
 
