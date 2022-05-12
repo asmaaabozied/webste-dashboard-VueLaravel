@@ -119,6 +119,9 @@ class AuthSystemController extends BaseController
     public function getAuthDetails()
     {
 
+
+            // dd(new UserResource(User::find(Auth::user()->id));
+
         return $this->getResponse(new UserResource(User::find(Auth::user()->id)), myTrans('GET_USER_DETAILS_SUCCESS'));
         // dd(User::find(auth()->user()->id));
         try {

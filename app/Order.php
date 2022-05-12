@@ -32,6 +32,7 @@ class Order extends BaseModel
         'technical_status',
         'technical_reason',
         'type',
+        'service_id'
     ];
     /**
      * @author karam mustafa

@@ -12,6 +12,7 @@ use App\User;
 use App\Users;
 
 use App\Customer;
+use App\Role;
 use Auth;
 
 
@@ -178,7 +179,7 @@ class UserController extends BaseController
             $user->role_id = $request->get("role_id") ?? '';
             $user->employee_id = $request->get("employee_id") ?? '';
             $user->save();
-            $customer=Customer::where('user_id',$request->id)->first();
+            $customer=Customer::where('user_id',$user->id)->first();
             $customer->name= $user->user_name ?? '';
             $customer->phone= $request['phone'] ?? '';
             $customer->user_id= $user->id;
@@ -193,10 +194,11 @@ class UserController extends BaseController
                 $user = User::create([
                     "user_name" => $request['user_name'],
                     "password"  => $request['password'],
-                    "role"      => 'customer',
+                    // "role"      => 'customer',
                     "type"=>$request['type'],
                     'role_id'=>$request['role_id'],
-                    'employee_id'=>$request['employee_id']
+                    'employee_id'=>$request['employee_id'],
+                    'role'=>Role::find($request->role_id)->display_name
                 ]);
 
                 Customer::create([

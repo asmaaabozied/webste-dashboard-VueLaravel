@@ -126,7 +126,7 @@
                                 :items="roles"
                                 v-model="role_id"
                                 :label="$t('auth.roles')"
-                                item-text="name"
+                                item-text="display_name"
                                 item-value="id"
                                 outlined
                                 rounded
